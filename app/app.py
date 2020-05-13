@@ -10,7 +10,6 @@ app = Quart(__name__)
 @app.route('/predict', methods=['POST'])
 async def predict():
     # get audio file and save it
-    #print(request.files)
     files = await request.files
     audio_file = files['file']
     file_name = str(random.randint(0, 100000))
@@ -28,4 +27,4 @@ async def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(host='0.0.0.0', port=8000, debug=False)

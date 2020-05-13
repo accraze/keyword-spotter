@@ -1,10 +1,26 @@
-version: "3.7"
+version: "3"
 
 services:
-
   app:
-    build: ./app
-    container_name: app
     restart: always
-    expose:
-      - 5000
+    image: quart-app
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+    - "8000:8000"
+    env_file:
+    - .env
+    volumes:
+    - "./app:/app:rw"
+  quart-nginx:
+    image: quart-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+    - "80:80"
+    links:
+    - app
+    depends_on:
+    - app
